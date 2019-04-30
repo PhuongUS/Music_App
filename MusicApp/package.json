@@ -1,0 +1,43 @@
+{
+  "name": "MusicApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/MusicApp/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "buffer": "^5.2.1",
+    "lodash": "^4.17.11",
+    "query-string": "^6.4.2",
+    "react": "16.6.3",
+    "react-native": "0.58.1",
+    "react-native-fast-image": "^5.2.0",
+    "react-native-gesture-handler": "^1.1.0",
+    "react-native-linear-gradient": "^2.5.4",
+    "react-native-sound": "^0.10.12",
+    "react-navigation": "^3.6.1",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^5.10.0",
+    "redux-thunk": "^2.3.0"
+  },
+  "rnpm": {
+    "assets": [
+      "./src/assets/fonts/"
+    ]
+  },
+  "devDependencies": {
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "24.7.1",
+    "jest": "24.7.1",
+    "metro-react-native-babel-preset": "0.53.1",
+    "react-test-renderer": "16.6.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
