@@ -49,8 +49,8 @@ export const getTrackArtist = (token,track_id) => {
             .then(res => {
                 console.log(res)
                 dispatch({
-                    type: TRACK_ARTIST_SUCCESS,
-                    payload: res.data
+                    type: 'SEND_DATA',
+                    payload: res.data.tracks
                 })
             })
     }

@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
-import {View,Text,StyleSheet,TouchableOpacity,Image,Dimensions,FlatList} from 'react-native';
+import {View,Text,StyleSheet,TouchableOpacity,Image,Dimensions,FlatList,ActivityIndicator} from 'react-native';
 import {LinearGradient} from 'react-native-linear-gradient';
 import {connect} from 'react-redux'
 import FastImage from 'react-native-fast-image'
 const {height, width} = Dimensions.get('window');
-
+import {hidenMiniDetail,sendDataMusic,sendIndexMusic} from './action/listMusic.action'
+import {addFavorite} from '../myMusic/actions/myMusic.action'
 const mapStateToProps = (state) => ({
     
-    dataAlbum:state.getAbumReducer.data,
+    //dataAlbum:state.getAbumReducer.data,
+    dataMusic:state.sendDataMusic.data,
 })
 class ListMusicScreen extends Component{
     constructor(props){
         super(props),
         this.state={
-            data:this.props.navigation.getParam('data')
+            name:this.props.navigation.getParam('name'),  // go to props
+            image:this.props.navigation.getParam('image'),
+            title:this.props.navigation.getParam('title')
         }
     }
-    onPress=(index)=>{
-        this.props.navigation.navigate('MusicDetail',{items:this.state.data.tracks.items,index:index})
+    onPress=(item,index)=>{// dispatch hiden miniDetail, send data//index
+        console.log(item)
+        this.props.dispatch(hidenMiniDetail())
+        this.props.dispatch(sendIndexMusic(index))
+        this.props.navigation.navigate('MusicDetail')
     }
     renderItem = (item,index) =>{
         return( 
-
-                <TouchableOpacity onPress={()=>this.onPress(index)} style={styles.frame_item}>
+                <TouchableOpacity onPress={()=>this.onPress(item,index)} style={styles.frame_item}>
                     <View style={styles.frame_index}>
                         <Text style={styles.index}>{index +1}</Text>
                     </View>
@@ -30,15 +36,19 @@ class ListMusicScreen extends Component{
                         <Text style={styles.name}>{item.name}</Text>
                     </View>
                 </TouchableOpacity>
-           
-            
         )
-      }
+    }
     render(){
-        console.log(this.state.data)
+        if(this.props.dataMusic==null){
+            return(
+                <View style={{flex: 1, padding: 20,backgroundColor:'white'}}>
+                    <ActivityIndicator/>
+                </View>
+            )
+        }else
         return(
-            
-            <View style={styles.container}>
+            <View style={styles.container}>{
+                console.log(this.state.image)}
                    <FastImage style={styles.banner} source={require('../../../assets/images/Bitmap3.png')}>
                         
                         </FastImage>
@@ -48,7 +58,7 @@ class ListMusicScreen extends Component{
                             </View> 
     
                             <FlatList
-                                data={this.state.data.tracks.items}
+                                data={this.props.dataMusic}
                                 keyExtractor={({id}, index) => id}
                                 renderItem={({item,index})=>this.renderItem(item,index)}>
                             </FlatList>
@@ -58,11 +68,11 @@ class ListMusicScreen extends Component{
                             <Image style={styles.banner1} source={require('../../../assets/images/Oval1.png')}/>
                             <Image style={styles.banner2} source={require('../../../assets/images/Oval1.png')}/>
                             <Image style={styles.banner3} source={require('../../../assets/images/Oval1.png')}/>
-                            <FastImage style={styles.banner4} source={{uri:this.state.data.images[1].url}}></FastImage>               
+                            <FastImage style={styles.banner4} source={{uri:this.state.image}}></FastImage>               
                         </View>
                         <View style={styles.frame_artist}>
-                            <Text style={styles.tt_album}>Album</Text>
-                            <Text style={styles.tt_name}>{this.state.data.name}</Text>
+                            <Text style={styles.tt_album}>{this.state.title}</Text>
+                            <Text style={styles.tt_name}>{this.state.name}</Text> 
                         </View>
                         <View style={styles.frame_icon}>
                             <View style={styles.icon}>
@@ -259,6 +269,7 @@ const styles=StyleSheet.create({
 
     },
     list_track:{
+        flex:1,
         marginTop: 45,
         margin: 30
         

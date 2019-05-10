@@ -39,7 +39,7 @@ export const loginReducer = (state = initialLoginState, action) => {
     }
 }
 // export const logoutUser=(state=initialLoginState,action)=>{
-//     if(action.type='LOGOUT')
+//     if(action.type='LOGOUT_USER')
 //     {
 //         return{
 //             ...state,
@@ -83,7 +83,7 @@ export const getTokenReducer = (state = initialTokenState, action) => {
     }
 }
 // export const logoutToken=(state=initialTokenState,action)=>{
-//     if(action.type=='LOGOUT'){
+//     if(action.type=='LOGOUT_TOKEN'){
 //         return {
 //             ...state,
 //             isLoading:true,

@@ -3,9 +3,8 @@ package com.musicapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.psykar.cookiemanager.CookieManagerPackage;
 import com.zmxv.RNSound.RNSoundPackage;
-import com.guichaguri.trackplayer.TrackPlayer;
-import com.johnsonsu.rnsoundplayer.RNSoundPlayerPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -29,9 +28,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new CookieManagerPackage(),
             new RNSoundPackage(),
-            new TrackPlayer(),
-            new RNSoundPlayerPackage(),
             new LinearGradientPackage(),
             new FastImageViewPackage(),
             new RNGestureHandlerPackage()

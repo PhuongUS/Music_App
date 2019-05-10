@@ -5,8 +5,8 @@ import {
 // import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux'
-import FastImage from '../../../../node_modules/react-native-fast-image';
-import {getArtist} from './actions/artists.action'
+import FastImage from 'react-native-fast-image';
+import {getArtist,getTrackArtist} from './actions/artists.action'
 const mapStateToProps = (state) => ({
     dataArtist: state.getArtistReducer.data,
     dataToken: state.getTokenReducer.data
@@ -17,17 +17,26 @@ const mapStateToProps = (state) => ({
         header:null,
     }
   }
-// constructor(props){
-//         super(props);
-//     this.props.dispatch(getArtits(this.props.dataToken.access_token))
+constructor(props){
+        super(props);
+    this.state={
+        refreshing:false
+    }
 
-//         };
+};
 componentDidMount(){
     this.props.dispatch(getArtist(this.props.dataToken.access_token))
 }
-  renderItem = (item,index) =>{
+onPress=(item)=>{
+    console.log(item)
+    this.props.dispatch(getTrackArtist(this.props.dataToken.access_token,item.id))
+    //this.props.navigation.navigate('ListMusic')
+
+    this.props.navigation.navigate('ListMusic',{name:item.name,image:item.images[0].url,title:'Album Artist'})
+}
+ renderItem = (item,index) =>{
     return( 
-        <TouchableOpacity style={styles.item_flat} onPress={()=>this.props.navigation.navigate('Track_Artist',{id:item.id,img:item.images[0].url,name:item.name,})}>
+        <TouchableOpacity style={styles.item_flat} onPress={()=>this.onPress(item)}>
                 <View style={styles.frame_images}>
                     <FastImage style={styles.images} source={{uri:item.images[0].url}}></FastImage>
                 </View>
@@ -41,7 +50,15 @@ componentDidMount(){
 
     )
   }
+handleRefresh=()=>{
+        this.setState({
+            refreshing: true,
+ 
+     },()=>{
+        this.props.dispatch(getArtits(this.props.dataToken.access_token))
 
+     })
+}
   render() {
     if (this.props.dataToken === null || this.props.dataArtist===null) {
         return(
@@ -66,7 +83,11 @@ componentDidMount(){
                     numColumns={2}
                     data={this.props.dataArtist.artists}
                     keyExtractor={({id}, index) => id}
-                    renderItem={({item,index})=>this.renderItem(item,index)}>
+                    renderItem={({item,index})=>this.renderItem(item,index)}
+                    refreshing = {this.state.refreshing}
+                    onRefresh={()=>this.handleRefresh}
+
+                    >
                 </FlatList>
         </View>
     );

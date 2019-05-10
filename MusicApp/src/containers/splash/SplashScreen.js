@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import { StyleSheet, View,StatusBar, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View,StatusBar, Text, TouchableOpacity,Dimensions } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import {connect} from 'react-redux'
+const {height, width} = Dimensions.get('window');
+
 const mapStateToProps = (state) => ({
     dataUser:state.loginReducer.data
 })
@@ -67,8 +69,8 @@ export default connect(mapStateToProps)(SplashScreen)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    width:width,
+    height:'100%'
   },
   btn_sign_up: {
     width: '45%',
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
     borderColor: '#979797',
     paddingTop: 20,
     marginLeft: 10,
-    marginTop: '130%',
+    marginTop: 500,
     width: '80%',
     height: '10%',
     opacity: 1,

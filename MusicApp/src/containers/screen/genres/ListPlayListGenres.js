@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux'
-import {getPlaylistOfGenres} from './actions/genres.action'
+import {getPlaylistOfGenres,getListMusicOfGenres} from './actions/genres.action'
 
 const {height, width} = Dimensions.get('window');
 const mapStateToProps = (state) => ({
@@ -25,13 +25,20 @@ class ListPlayListGenres extends Component{
     };
         
     componentDidMount(){
+        console.log(this.state.category_id)
         this.props.dispatch(getPlaylistOfGenres(this.props.dataToken.access_token,this.state.category_id))
     }
+    onPress=(item)=>{
+        this.props.dispatch(getListMusicOfGenres(this.props.dataToken.access_token,item.id))
+        console.log(this.state.image)
+        this.props.navigation.navigate('ListMusic',{name:this.state.name,image:this.state.image,title:'Album Genres'})
+    }
     renderItem=(item,index)=>{
+        console.log(item.id)
         return(
             <View style={styles.viewItem}>
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate('PlayList',{playlist_id:item.id})}>
-                    <Image source={{uri:item.images[0].url}} style={{width:160,height:160,borderRadius:8}}></Image>
+                <TouchableOpacity onPress={()=>this.onPress(item)}>
+                    <FastImage source={{uri:item.images[0].url}} style={{width:160,height:160,borderRadius:8}}></FastImage>
                     {/* <Text>{item.name}</Text> */}
                 </TouchableOpacity>
                 

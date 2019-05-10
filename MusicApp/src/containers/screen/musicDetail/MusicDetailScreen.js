@@ -1,22 +1,27 @@
 import React,{Component} from 'react'
-import {View,Text,Image,StyleSheet,Dimensions,ImageBackground,TouchableOpacity,Slider,Platform,Alert} from 'react-native'
+import {View,Text,Image,StyleSheet,Dimensions,ImageBackground,TouchableOpacity,Slider,Platform,Alert,ActivityIndicator} from 'react-native'
 import FastImage from 'react-native-fast-image';
 const {height, width} = Dimensions.get('window');
 import Sound from 'react-native-sound';
+import {connect} from 'react-redux'
+import {showMiniDetail,sendIndexMusic,nowPlaying} from '../listMusic/action/listMusic.action'
+import Singleton from '../../singleton/singleton'
 import { thisExpression } from '../../../../node_modules/@babel/types';
+import {PLAYING,PAUSED}from '../../../utils/utils'
+Sound.setCategory('Playback');
 
-export default class MusicDetailScreen extends Component {
+const mapStateToProps = (state) => ({
+    
+    dataMusic:state.sendDataMusic.data,
+    index:state.sendIndexMusic.index,
+    isPlaying:state.nowPlayingReducer.isPlaying
+})
+class MusicDetailScreen extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            name: this.props.navigation.getParam("name"),
-            artistName: this.props.navigation.getParam("artistName"),
-            items:this.props.navigation.getParam('items'),
-            index:this.props.navigation.getParam('index'),
             value: 50,
-            playState:'paused',
-            pause:0,
             playSeconds:0,
             duration:0,
             random:false,
@@ -28,25 +33,30 @@ export default class MusicDetailScreen extends Component {
     }
 
     componentDidMount(){
-        this.play();
-        this.timeout = setInterval(() => {
-            if(this.sound && this.sound.isLoaded() && this.state.playState == 'playing' && !this.sliderEditing){
+        if(this.props.isPlaying){
+            this.soung=Singleton.getSound()
+            if(this.sound!=null)
+            {
+                
+            }
+            this.timeout = setInterval(() => {
                 this.sound.getCurrentTime((seconds, isPlaying) => {
-                    this.setState({playSeconds:seconds});
+                    this.setState({playSeconds:seconds,duration:this.sound.getDuration()});
+                })
+        }, 100);
+        }
+        this.play(this.playComplete)
+        this.timeout = setInterval(() => {
+            if(this.sound && this.sound.isLoaded() && this.props.isPlaying == true && !this.sliderEditing){
+                this.sound.getCurrentTime((seconds, isPlaying) => {
+                    //console.log(isPlaying)
+                        this.setState({playSeconds:seconds});
                 })
             }
         }, 100);
     }
-    componentWillUnmount(){
-        if(this.sound){
-            //this.sound.release();
-            this.sound = null;
-        }
-        if(this.timeout){
-            clearInterval(this.timeout);
-        }
-    }
-    onPress=()=>{
+    onPress=()=>{   //dispatch show mini detail
+        this.props.dispatch(showMiniDetail())
         this.props.navigation.goBack()
     }
     change(value) {
@@ -75,23 +85,23 @@ export default class MusicDetailScreen extends Component {
                 
                 if(this.state.repeat){
                     this.sound.play(this.playComplete) //if user click repeat =>loop
-                    this.setState({playState:'playing', playSeconds:0});
-
+                    this.setState({ playSeconds:0});
+                    this.props.dispatch({type:PLAYING})
+                    //
                 }
                 else{
                     this.next() // auto next
-                    //this.setState({playState:'paused', playSeconds:0});
                 }
             } else {
                 console.log('playback failed due to audio decoding errors');
-                Alert.alert('Notice', 'audio file error. (Error code : 2)');
+                //Alert.alert('Notice', 'audio file error. (Error code : 2)');
             }
-            // this.setState({playState:'paused', playSeconds:0});
+            this.setState({ playSeconds:0});
+            this.props.dispatch({type:PLAYING})
+            //
             this.sound.setCurrentTime(0);
         }
     }
-    //onPressLoop setState loop.
-    //onPressRamdom radom index number in array items length => setState index
     random =()=>{
         if(this.state.random){
             this.setState({random:false,shuffleColor:'white'})
@@ -99,78 +109,65 @@ export default class MusicDetailScreen extends Component {
             this.setState({random:true,shuffleColor:'blue'})
         }
     }
-    play = async () => {
+    loadComplete=()=>{
+        console.log('loaded')
+        this.setState({duration:this.sound.getDuration()});
+        this.sound.play(this.playComplete)
+        this.props.dispatch({type:PLAYING})
+    }
+    play=async()=>{
         if(this.sound){
             this.sound.play(this.playComplete);
-            this.setState({playState:'playing'});
+            this.props.dispatch({type:PLAYING})
         }else{
-            this.sound = new Sound(this.state.items[this.state.index].preview_url, '', (error) => {
-                if (error) {
-                    console.log('failed to load the sound', error);
-                    Alert.alert('Notice', 'audio file error. (Error code : 1)');
-                    this.setState({playState:'paused'});
-                }else{
-                    this.setState({playState:'playing', duration:this.sound.getDuration()});
-                    this.sound.play(this.playComplete);
-                }
-            });    
+            this.sound=Singleton.getSound()
+            if(this.sound==null){
+                var preview_url=this.props.dataMusic[this.props.index].preview_url
+                this.sound =  Singleton.getInstance(preview_url,this.loadComplete);
+            }
         }
     }
     pause = () => {
         if(this.sound){
             this.sound.pause();
         }
-
-        this.setState({playState:'paused'});
+        this.props.dispatch({type:PAUSED})
     }
+   
     next=()=>{
         if(this.sound){
             this.sound.release();
             this.sound=null;
         }
-        //radom
         var index
         if(this.state.random){
-            index=Math.floor(Math.random() * this.state.items.length);
+            index=Math.floor(Math.random() * this.props.dataMusic.length);
         }else{
-            index=this.state.index+1
+            index=this.props.index+1
         }
         console.log(index)
-            console.log(this.state.items.length)
-        if(index == this.state.items.length)
+        console.log(this.props.dataMusic.length)
+        if(index == this.props.dataMusic.length)
         {
             index=0
         }
-        this.sound = new Sound(this.state.items[index].preview_url, '', (error) => {
-            if (error) {
-                console.log('failed to load the sound', error);
-                Alert.alert('Notice', 'audio file error. (Error code : 1)');
-                this.setState({playState:'paused'});
-            }else{
-                this.setState({playState:'playing',index:index, duration:this.sound.getDuration()});
-                this.sound.play(this.playComplete);
-            }
-        });  
+        this.props.dispatch(sendIndexMusic(index))
+        let url = this.props.dataMusic[index].preview_url
+        this.sound=Singleton.next(url,this.loadComplete)
     }
     prev=()=>{
         if(this.sound){
             this.sound.release();
             this.sound=null;
         }
-        var index=this.state.index-1;
+        var index=this.props.index-1;
         if(index<0){
-            index=this.state.items.length-1
+            index=this.props.dataMusic.length-1
         }
-        this.sound = new Sound(this.state.items[index].preview_url, '', (error) => {
-            if (error) {
-                console.log('failed to load the sound', error);
-                Alert.alert('Notice', 'audio file error. (Error code : 1)');
-                this.setState({playState:'paused'});
-            }else{
-                this.setState({playState:'playing',index:index, duration:this.sound.getDuration()});
-                this.sound.play(this.playComplete);
-            }
-        });  
+
+        let url = this.props.dataMusic[index].preview_url
+        this.sound=Singleton.next(url,this.loadComplete)
+        this.props.dispatch(sendIndexMusic(index)) 
     }
     repeat=()=>{
         if(this.state.repeat){
@@ -188,10 +185,18 @@ export default class MusicDetailScreen extends Component {
     }
     
     render() {
-         console.log(this.state.items)
+        
+        //console.log(this.sound)
         const { value } = this.state;
         const currentTimeString = this.getAudioTimeString(this.state.playSeconds);
         const durationString = this.getAudioTimeString(this.state.duration);
+        if(this.props.dataMusic===null||this.props.index==null){
+            return(
+                <View style={{flex: 1, padding: 20,backgroundColor:'white'}}>
+                <ActivityIndicator/>
+                </View>
+            )
+        }else
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -211,7 +216,7 @@ export default class MusicDetailScreen extends Component {
                 </TouchableOpacity>
             </View>
             <View style={styles.frame_name}>
-                <Text style={styles.name}>{this.state.items[this.state.index].name}</Text>
+                <Text style={styles.name}>{this.props.dataMusic[this.props.index].name}</Text>
                 {/* <Text style={styles.artistName}>{this.state.artistName}</Text> */}
             </View>
             </View>
@@ -276,14 +281,14 @@ export default class MusicDetailScreen extends Component {
                 />
             </TouchableOpacity>
 
-            {this.state.playState=='paused'&& 
+            {this.props.isPlaying==false&& 
                 <TouchableOpacity style={styles.play} onPress={this.play}>
                     <Image
                     style={styles.ic_play}
                     source={require("../../../assets/images/ic_play.png")}
                     />
                 </TouchableOpacity>}
-            {this.state.playState=='playing'&& 
+            {this.props.isPlaying==true&& 
                 <TouchableOpacity style={styles.play} onPress={this.pause}>
                     <Image
                     style={styles.ic_play}
@@ -307,9 +312,12 @@ export default class MusicDetailScreen extends Component {
         );
     }
 }
+
+export default connect(mapStateToProps)(MusicDetailScreen)
 const styles= StyleSheet.create({
     container:{
         flex:1,
+        position:'absolute'
     },
      header: {
         flexDirection: 'row',

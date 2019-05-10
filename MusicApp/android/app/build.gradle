@@ -134,9 +134,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-cookies')
     implementation project(':react-native-sound')
-    implementation project(':react-native-track-player')
-    implementation project(':react-native-sound-player')
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-fast-image')
     implementation project(':react-native-gesture-handler')

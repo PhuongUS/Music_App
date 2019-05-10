@@ -12,6 +12,8 @@ import FastImage from "react-native-fast-image";
 import { connect } from "react-redux";
 import { loginRequest } from "../../auth/login/actions/login.actions";
 import { logoutSuccess } from "../../auth/login/reducers/login.reducer";
+import CookieManager from 'react-native-cookies';
+
 const mapStateToProps = state => ({
   dataToken: state.getTokenReducer.data,
   userProfile: state.loginReducer.data
@@ -19,116 +21,129 @@ const mapStateToProps = state => ({
 
 class SideMenu extends Component {
     componentDidMount() {
+
     }
-    onPressLogout = () => {};
+    
+    onPressLogout = () => {
+        this.props.navigation.navigate("Splash");
+    };
     onPress = () => {
-    Alert.alert(
-      "Notification",
-      "Do you want to logout???",
-      [
-        {
-            text: "Logout",
-            onPress: () => {
-                this.props.dispatch({type:'LOGOUT'})
-                this.props.navigation.navigate("Splash");
+        Alert.alert(
+        "Notification",
+        "Do you want to logout???",
+        [
+            {
+                text: "Logout",
+                onPress: () => {
+                    this.props.dispatch({type:'USER_LOGOUT'})
+                    
+                        CookieManager.clearAll()
+                        .then((res) => {
+                            console.log('CookieManager.clearAll =>', res);
+                        });                    
+                        
+                    this.props.navigation.navigate("Splash");
+                    
+
+                }
+            },
+            {
+            text: "Cancel",
+            onPress: () => this.props.navigation.navigate("Home"),
+            style: "cancel"
             }
-        },
-        {
-          text: "Cancel",
-          onPress: () => this.props.navigation.navigate("Home"),
-          style: "cancel"
-        }
-      ],
-      { cancelable: false }
-    );
-  };
-  render() {
-    console.log(this.props.userProfile)
-    const Profile=this.props.userProfile
-    if(this.props.dataToken===null || this.props.userProfile===null){
-        return(
-            <View style={{flex: 1, padding: 20,backgroundColor:'white'}}>
-            <ActivityIndicator/>
+        ],
+            { cancelable: false }
+        );
+    };
+    render() {
+        //console.log(this.props.userProfile)
+        const Profile=this.props.userProfile
+        if(this.props.dataToken===null || this.props.userProfile===null){
+            return(
+                <View style={{flex: 1, padding: 20,backgroundColor:'white'}}>
+                <ActivityIndicator/>
+                </View>
+        )
+        }else
+        return (
+        <View style={styles.container}>
+            <FastImage
+            style={styles.background}
+            source={require("../../../assets/images/shutterstock.png")}
+            >
+            <View style={styles.frame_icon}>
+                <Image
+                style={styles.icon_inbox}
+                source={require("../../../assets/images/ic_inbox.png")}
+                />
+                <Image
+                style={styles.icon_setting}
+                source={require("../../../assets/images/ic_settings.png")}
+                />
             </View>
-      )
-    }else
-    return (
-      <View style={styles.container}>
-        <FastImage
-          style={styles.background}
-          source={require("../../../assets/images/shutterstock.png")}
-        >
-          <View style={styles.frame_icon}>
-            <Image
-              style={styles.icon_inbox}
-              source={require("../../../assets/images/ic_inbox.png")}
-            />
-            <Image
-              style={styles.icon_setting}
-              source={require("../../../assets/images/ic_settings.png")}
-            />
-          </View>
-          <View style={styles.profile}>
-                <TouchableOpacity onPress={this.onPress}>
-                    {/* {Profile.images?<Image style={styles.avatar} source={require("../../../assets/images/avatar_profile.png")}
-                    /> : <Image style={styles.avatar} source={{uri:Profile.data.images[0].url}}></Image>  } */}
-                </TouchableOpacity>
-                {/* <Text style={styles.name}>{Profile.data.display_name}</Text> */}
-            </View>
-          <TouchableOpacity
-            style={styles.home}
-            onPress={() => {
-              this.props.navigation.navigate("Home");
-            }}
-          >
-            <Image
-              style={styles.icon_home}
-              source={require("../../../assets/images/menu.png")}
-            />
-            <Text style={styles.txt_home}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.artist}
-            onPress={() => {
-              this.props.navigation.navigate("Artist");
-            }}
-          >
-            <Image
-              style={styles.icon_artist}
-              source={require("../../../assets/images/ic_activity.png")}
-            />
-            <Text style={styles.txt_home}>Artist</Text>
-          </TouchableOpacity>
+            {/* <View style={styles.profile}> */}
+                    <TouchableOpacity style={styles.profile} onPress={()=>this.onPress()}>
+                        {Profile.images?<Image style={styles.avatar} source={{uri:Profile.data.images[0].url}}></Image>
+                        :<Image style={styles.avatar} source={require("../../../assets/images/avatar_profile.png")}
+                        />   } 
+                        <Text style={styles.name}>{Profile.data.display_name}</Text> 
+                    </TouchableOpacity>
+                {/* </View> */}
+            <TouchableOpacity
+                style={styles.home}
+                onPress={() => {
+                this.props.navigation.navigate("Home");
+                }}
+            >
+                <Image
+                style={styles.icon_home}
+                source={require("../../../assets/images/menu.png")}
+                />
+                <Text style={styles.txt_home}>Home</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.artist}
+                onPress={() => {
+                this.props.navigation.navigate("Artist");
+                }}
+            >
+                <Image
+                style={styles.icon_artist}
+                source={require("../../../assets/images/ic_activity.png")}
+                />
+                <Text style={styles.txt_home}>Artist</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.artist}>
-            <Image
-              style={styles.icon_home}
-              source={require("../../../assets/images/ic_your_music.png")}
-            />
-            <Text style={styles.txt_home}>Music</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.artist}
-            onPress={() => this.props.navigation.navigate("Genres")}
-          >
-            <Image
-              style={styles.icon_home}
-              source={require("../../../assets/images/ic_browse.png")}
-            />
-            <Text style={styles.txt_home}>Genres</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.artist}
+                onPress={() => this.props.navigation.navigate("Genres")}
+            >
+                <Image
+                style={styles.icon_home}
+                source={require("../../../assets/images/ic_browse.png")}
+                />
+                <Text style={styles.txt_home}>Genres</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity style={styles.artist}>
-            <Image
-              style={styles.icon_home}
-              source={require("../../../assets/images/ic_radio.png")}
-            />
-            <Text style={styles.txt_home}>Top Rated</Text>
-          </TouchableOpacity>
-        </FastImage>
-      </View>
-    );
-  }
+            <TouchableOpacity style={styles.artist}>
+                <Image
+                style={styles.icon_home}
+                source={require("../../../assets/images/ic_radio.png")}
+                />
+                <Text style={styles.txt_home}>Top Rated</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.artist}onPress={()=>this.props.navigation.navigate('MyMusic')}>
+                <Image
+                style={styles.icon_home}
+                source={require("../../../assets/images/ic_your_music.png")}
+                />
+                <Text style={styles.txt_home}>My Music</Text>
+            </TouchableOpacity>
+            </FastImage>
+        </View>
+        );
+    }
 }
 
 export default connect(mapStateToProps)(SideMenu);
@@ -162,7 +177,7 @@ const styles = StyleSheet.create({
   icon_setting: {
     // alignItems:'flex-end',
     width: 35,
-    height: 25
+    height: 35
   },
   profile: {
     // flex: 1,
@@ -195,9 +210,9 @@ const styles = StyleSheet.create({
 
   icon_artist: {
     width: 25,
-    height: 35,
+    height: 25,
     marginLeft: 30,
-    marginRight: 30
+    marginRight: 40
   },
   icon_home: {
     width: 35,

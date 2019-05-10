@@ -24,7 +24,7 @@
 		1DACD309481E4741A112FBF0 /* Gotham Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5E32E8303A947DF919D1D76 /* Gotham Medium.ttf */; };
 		4951357E2265EBA300C37845 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 490638F72265E93D0058316A /* libBVLinearGradient.a */; };
 		4978566F225F11B80056EE1E /* Gotham-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 921211BABA9045F98DE56990 /* Gotham-Book.otf */; };
-		49957A9D2271463400496D5E /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 49957A9C2271463400496D5E /* main.jsbundle */; };
+		49A61B54228176F600C4AF6E /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 49A61B27228176F600C4AF6E /* main.jsbundle */; };
 		522D1BC1CE9A4D849A5389FF /* Gotham-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = D11D846B86C647799FCBC9DE /* Gotham-Bold.otf */; };
 		5CE512DA76ED43ADA1318500 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 95576B03186E48DAA95B0B86 /* libRNGestureHandler.a */; };
 		73E283D9225C380E0025038C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB61A68108700A75B9A /* Info.plist */; };
@@ -32,6 +32,7 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		D2288CF5225DC81800584C09 /* Gotham-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = B61B490EF642462EBE387BAD /* Gotham-Light.otf */; };
 		D2452CEE2272AA110057865D /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2452CED2272A9F70057865D /* libRNSound.a */; };
+		DB2805DEE53B4D58B1B905C6 /* libRNCookieManagerIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C2CC5B0A2254627A5188F35 /* libRNCookieManagerIOS.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		FEF9211B614342D290E8863B /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D67D2C02067245C295E0284C /* libFastImage.a */; };
 /* End PBXBuildFile section */
@@ -247,6 +248,13 @@
 			remoteGlobalIDString = 64AA15081EF7F30100718508;
 			remoteInfo = "BVLinearGradient-tvOS";
 		};
+		49CCEC54227FCE9A00DED02A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3869E95CE8D846C396E80F09 /* RNCookieManagerIOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1BD725DA1CF77A8B005DBD79;
+			remoteInfo = RNCookieManagerIOS;
+		};
 		5E9157321DD0AC6500FF2AA8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */;
@@ -361,14 +369,16 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		35DF64BAC59442CCB0942862 /* RNSound.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
+		3869E95CE8D846C396E80F09 /* RNCookieManagerIOS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNCookieManagerIOS.xcodeproj; path = "../node_modules/react-native-cookies/ios/RNCookieManagerIOS.xcodeproj"; sourceTree = "<group>"; };
 		490638EF2265E93D0058316A /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
-		49957A9C2271463400496D5E /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		49A61B27228176F600C4AF6E /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		4D771BACAA2C4850B1D89585 /* libRNSoundPlayer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNSoundPlayer.a; sourceTree = "<group>"; };
 		5C7D2FAFD9B7499E9A794022 /* FastImage.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = FastImage.xcodeproj; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		8496393A4CA346FFA1289762 /* Gotham-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham-Medium.ttf"; path = "../src/assets/fonts/Gotham-Medium.ttf"; sourceTree = "<group>"; };
+		8C2CC5B0A2254627A5188F35 /* libRNCookieManagerIOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNCookieManagerIOS.a; sourceTree = "<group>"; };
 		921211BABA9045F98DE56990 /* Gotham-Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham-Book.otf"; path = "../src/assets/fonts/Gotham-Book.otf"; sourceTree = "<group>"; };
 		95576B03186E48DAA95B0B86 /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
@@ -405,6 +415,7 @@
 				5CE512DA76ED43ADA1318500 /* libRNGestureHandler.a in Frameworks */,
 				FEF9211B614342D290E8863B /* libFastImage.a in Frameworks */,
 				4951357E2265EBA300C37845 /* libBVLinearGradient.a in Frameworks */,
+				DB2805DEE53B4D58B1B905C6 /* libRNCookieManagerIOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -493,7 +504,7 @@
 		13B07FAE1A68108700A75B9A /* MusicApp */ = {
 			isa = PBXGroup;
 			children = (
-				49957A9C2271463400496D5E /* main.jsbundle */,
+				49A61B27228176F600C4AF6E /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -546,6 +557,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		49CCEC51227FCE9A00DED02A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				49CCEC55227FCE9A00DED02A /* libRNCookieManagerIOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -576,6 +595,7 @@
 				4D771BACAA2C4850B1D89585 /* libRNSoundPlayer.a */,
 				AE80E2137E874BC8B83571C6 /* libRNTrackPlayer.a */,
 				D09E28CAABA3497EB2C2E6FE /* libRNSound.a */,
+				8C2CC5B0A2254627A5188F35 /* libRNCookieManagerIOS.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -617,6 +637,7 @@
 				08833A10FD754BC399895EC3 /* RNGestureHandler.xcodeproj */,
 				5C7D2FAFD9B7499E9A794022 /* FastImage.xcodeproj */,
 				35DF64BAC59442CCB0942862 /* RNSound.xcodeproj */,
+				3869E95CE8D846C396E80F09 /* RNCookieManagerIOS.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -782,6 +803,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = 49CCEC51227FCE9A00DED02A /* Products */;
+					ProjectRef = 3869E95CE8D846C396E80F09 /* RNCookieManagerIOS.xcodeproj */;
 				},
 				{
 					ProductGroup = 736E0A3A225C55DB004EFC87 /* Products */;
@@ -1010,6 +1035,13 @@
 			remoteRef = 490638F62265E93D0058316A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		49CCEC55227FCE9A00DED02A /* libRNCookieManagerIOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNCookieManagerIOS.a;
+			remoteRef = 49CCEC54227FCE9A00DED02A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1115,7 +1147,7 @@
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				522D1BC1CE9A4D849A5389FF /* Gotham-Bold.otf in Resources */,
 				1DACD309481E4741A112FBF0 /* Gotham Medium.ttf in Resources */,
-				49957A9D2271463400496D5E /* main.jsbundle in Resources */,
+				49A61B54228176F600C4AF6E /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1181,11 +1213,13 @@
 					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
+					"$(SRCROOT)/../node_modules/react-native-cookies/ios/RNCookieManagerIOS",
 				);
 				INFOPLIST_FILE = MusicApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/MusicApp\"",
 					"\"$(SRCROOT)/MusicApp\"",
 					"\"$(SRCROOT)/MusicApp\"",
 					"\"$(SRCROOT)/MusicApp\"",
@@ -1222,11 +1256,13 @@
 					"$(SRCROOT)/../node_modules/react-native-track-player/ios/RNTrackPlayer/**",
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
 					"$(SRCROOT)/../node_modules/react-native-sound/RNSound",
+					"$(SRCROOT)/../node_modules/react-native-cookies/ios/RNCookieManagerIOS",
 				);
 				INFOPLIST_FILE = MusicApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/MusicApp\"",
 					"\"$(SRCROOT)/MusicApp\"",
 					"\"$(SRCROOT)/MusicApp\"",
 					"\"$(SRCROOT)/MusicApp\"",

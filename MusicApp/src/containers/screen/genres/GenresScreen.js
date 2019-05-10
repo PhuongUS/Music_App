@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import{View,Text,StyleSheet,TouchableOpacity,Image,FlatList} from 'react-native';
 import {connect} from 'react-redux';
+import FastImage from 'react-native-fast-image'
 
 const mapStateToProps=(state)=>({
     dataGenres: state.getGenresReducer.data,
@@ -10,7 +11,7 @@ class GenresScreen extends Component{
         return( 
             <View style={styles.viewItem}>
                 <TouchableOpacity onPress={()=>{this.props.navigation.navigate('ListPlayListGenres',{id:item.id, image:item.icons[0].url,name:item.name})}}>
-                    <Image source={{uri:item.icons[0].url}} style={{width:160,height:160}}/>
+                    <FastImage source={{uri:item.icons[0].url}} style={{width:160,height:160}}/>
                     <View style={{justifyContent:'center',alignItems:'center',height:30}}>
                         <Text>{item.name}</Text>
                     </View>

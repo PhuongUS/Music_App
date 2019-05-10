@@ -4,14 +4,17 @@ import FastImage from 'react-native-fast-image'
 import {connect} from 'react-redux'
 import {AlbumRequest,AlbumFeature,getGenres} from './actions/home.action'
 import LinearGradient from 'react-native-linear-gradient';
+import {addFavorite} from '../myMusic/actions/myMusic.action'
 
 //import HeaderHome from './Header'
 const {height, Constwidth} = Dimensions.get('window');
+import {sendDataMusic} from '../listMusic/action/listMusic.action'
 const mapStateToProps = (state) => ({
     dataToken:state.getTokenReducer.data,
     dataAlbum:state.getAbumReducer.data,
     dataFeatured:state.getAbumFeaturedReducer.data,
     dataGenres: state.getGenresReducer.data,
+    //dataFavorite:state.addFavoriteReducer.items
 })
 class HomeScreen extends Component {
     componentDidMount(){
@@ -20,15 +23,19 @@ class HomeScreen extends Component {
         this.props.dispatch(getGenres(this.props.dataToken.access_token))
     }
     onPress=(item)=>{
-        this.props.navigation.navigate('ListMusic',{data:item})
+        console.log(item)
+        this.props.dispatch(sendDataMusic(item.tracks.items))
+        this.props.navigation.navigate('ListMusic',{name:item.name,image:item.images[0].url,title:'Album'})
+        
     }
     renderItem = (item,index) =>{
+        console.log(item)
         return( 
             <TouchableOpacity onPress={()=>this.onPress(item)}>
                  <View style={{width:150,height:200,marginRight:6,backgroundColor:'white'}}>
                     <FastImage source={{uri:item.images[1].url}} style={{width:150,height:150}}>
                     </FastImage>
-                    <View style={{alignItems:'center'}}>
+                    <View style={{alignItems:'center',flex:1,justifyContent:'center'}}>
                         <Text >{item.name}</Text>
                     </View>
                 </View>
@@ -36,10 +43,10 @@ class HomeScreen extends Component {
         )
       }
     render() {
-        {console.log(this.props.dataToken.access_token)}
-        //this.props.dispatch(AlbumRequest(this.props.dataToken.access_token))
-        {console.log(this.props.dataAlbum)}
-        {console.log(this.props.dataFeatured)}
+        // {console.log(this.props.dataToken.access_token)}
+        // //this.props.dispatch(AlbumRequest(this.props.dataToken.access_token))
+        //{console.log(this.props.dataFavorite)}
+        // {console.log(this.props.dataFeatured)}
         if(this.props.dataToken===null || this.props.dataFeatured===null || this.props.dataGenres===null || this.props.dataAlbum===null){
             return(
                 <View style={{flex: 1, padding: 20,backgroundColor:'white'}}>
@@ -74,10 +81,10 @@ class HomeScreen extends Component {
                     </View>
                     
                 </LinearGradient>
-                <View style={styles.view3}>
+                <View style={styles.viewBackground}>
                     
                 </View>
-                <View style={styles.view2}>
+                <View style={styles.viewAbsolute}>
                         <FlatList
                             style={styles.list_artists}
                             //numColumns={2}
@@ -90,7 +97,7 @@ class HomeScreen extends Component {
                             //style={{justifyContent:'flex-end'}}
                         /> 
                    
-                    <View style={{marginTop:30,marginRight:'15%'}}>
+                    <View style={{marginTop:30,marginRight:'15%',flex:1}}>
                         <Text style={styles.text}>FEATURED ALBUM</Text>
                         <TouchableOpacity style={{flexDirection:'row',borderBottomWidth:0.5,borderTopWidth:0.5,marginRight:'15%'}}
                             onPress={()=>this.onPress(this.props.dataFeatured)}
@@ -110,7 +117,7 @@ class HomeScreen extends Component {
                             
                         </TouchableOpacity>             
                     </View>
-                    <View style={{marginTop:30}}>
+                    <View style={{marginTop:30,flex:1}}>
                         <Text style={styles.text}>GENRES & MOODS</Text>
                         <FlatList
                         //style={styles.list_artists}
@@ -124,9 +131,9 @@ class HomeScreen extends Component {
                     </View>
                     
                 </View>
-                <View style={styles.footer}>
+                {/* <View style={styles.footer}>
                     <Text>5s Quảng cáo</Text>
-                </View>
+                </View> */}
             </View>
            
 
@@ -161,7 +168,7 @@ const styles = StyleSheet.create({
         // alignContent: 'center',
 
     }, 
-    view2:{
+    viewAbsolute:{
         flex:1,
         marginLeft:20,
         marginTop:140,
@@ -169,7 +176,7 @@ const styles = StyleSheet.create({
         position:'absolute',
     },
   
-    view3:{
+    viewBackground:{
         flex:1,
         backgroundColor:'#E6E6FA'
         //backgroundColor:'yellow'
@@ -190,5 +197,6 @@ const styles = StyleSheet.create({
         //backgroundColor:'white'
     },
     list_artists:{
+        flex:1
     }
 });
